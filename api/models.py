@@ -17,7 +17,7 @@ class MealTypeList(models.Model):
 	def __str__(self):
 		return self.meal_type
 
-class ListOfMeals(models.Model):
+class ListOfMeal(models.Model):
 	name = models.CharField(max_length= 250)
 	image = models.ImageField()
 	Description = models.CharField(max_length= 1000, default="")
@@ -33,7 +33,7 @@ class ListOfMeals(models.Model):
 	def __str__(self):
 		return self.name
 
-class ListOfSnacks(models.Model):
+class ListOfSnack(models.Model):
 	name = models.CharField(max_length= 250)
 
 	def __str__(self):

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import PlanList, MealTypeList, ListOfMeals, ListOfSnacks
+from .models import PlanList, MealTypeList, ListOfMeal, ListOfSnack
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class MealListSerializer(serializers.ModelSerializer):
 
 class ListOfMealsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ListOfMeals
+        model = ListOfMeal
         fields = [
           'name', 
           'image',
@@ -49,7 +49,7 @@ class ListOfMealsSerializer(serializers.ModelSerializer):
 
 class ListOfSnacksSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ListOfSnacks
+        model = ListOfSnack
         fields = [
           'name'
             ]

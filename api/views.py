@@ -1,6 +1,6 @@
 from rest_framework.generics import CreateAPIView, ListAPIView
 from .serializers import UserCreateSerializer, PlanListSerializer, MealListSerializer, ListOfMealsSerializer, ListOfSnacksSerializer
-from .models import PlanList, MealTypeList, ListOfMeals, ListOfSnacks
+from .models import PlanList, MealTypeList, ListOfMeal, ListOfSnack
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
@@ -15,11 +15,11 @@ class MealTypeView(ListAPIView):
 	serializer_class = MealListSerializer
 
 class MealsList(ListAPIView):
-	queryset = ListOfMeals.objects.all()
+	queryset = ListOfMeal.objects.all()
 	serializer_class = ListOfMealsSerializer
 
 class SnacksList(ListAPIView):
-	queryset = ListOfSnacks.objects.all()
+	queryset = ListOfSnack.objects.all()
 	serializer_class = ListOfSnacksSerializer
 
 

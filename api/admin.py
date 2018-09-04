@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import  PlanList, MealTypeList, ListOfMeals, ListOfSnacks 
+from .models import  PlanList, MealTypeList, ListOfMeal, ListOfSnack 
 
 admin.site.register(PlanList)
 admin.site.register(MealTypeList)
-admin.site.register(ListOfMeals)
-admin.site.register(ListOfSnacks)
+admin.site.register(ListOfMeal)
+admin.site.register(ListOfSnack)
 
 
