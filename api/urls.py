@@ -12,8 +12,4 @@ urlpatterns = [
     path('api/mealsList/', MealsList.as_view(), name='api-meal-List'),
     path('api/snacksList/', SnacksList.as_view(), name='api-snack-List'),
 
-
-
-
-
 ]
