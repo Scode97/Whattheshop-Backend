@@ -28,7 +28,7 @@ from django.contrib.auth.models import User
 
 class Plans(models.Model):
 	name = models.CharField(max_length= 250)
-	# image = models.ImageField()
+	image = models.ImageField(default='SOME STRING')
 	# Description = models.CharField(max_length= 1000, default="")
 	# Ingredients = models.TextField()
 	# Instructions = models.TextField()
