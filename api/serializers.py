@@ -17,12 +17,12 @@ from django.db.models.signals import post_save
 
 class UserCreateSerializer(serializers.ModelSerializer):
 
-  token = serializers.CharField(read_only=True)
-  password = serializers.CharField(write_only=True)
+    token = serializers.CharField(read_only=True)
+    password = serializers.CharField(write_only=True)
 
-  class Meta:
-    model = User
-    fields = ['username', 'password','token', 'first_name', 'last_name', 'email']
+    class Meta:
+      model = User
+      fields = ['username', 'password','token', 'first_name', 'last_name', 'email']
 
     def create(self, validated_data):
         username = validated_data['username']
@@ -40,7 +40,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
         new_user.save()
 
         # refer https://stackoverflow.com/questions/41623751/token-creation-with-rest-framework-jwt
-        new_user.save()
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
@@ -50,6 +49,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
         token = jwt_encode_handler(handler)
 
         validated_data["token"] = token
+
+        print (validated_data)
 
         return validated_data
 
@@ -90,7 +91,8 @@ class PlansSerializer(serializers.ModelSerializer):
         model = Plans
         fields = [
           'name', 
-          # 'image',
+          'image',
+          'totalPrice'
           # 'Ingredients',
           # 'Instructions',
           # 'prep',
