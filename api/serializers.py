@@ -70,42 +70,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-# class PlanListSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = PlanList
-#         fields = [
-#           'plan_type',
-#           'description'
-#             ]
-
-# class MealListSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = MealTypeList
-#         fields = [
-#           'meal_type',
-#           'description'
-#             ]
-
 class PlansSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plans
         fields = [
           'name', 
           'image',
-          'totalPrice'
-          # 'Ingredients',
-          # 'Instructions',
-          # 'prep',
-          # 'cook',
-          # 'Ready_In',
-          # 'Nutrition_Facts'
+          'totalPrice',
+          'description'
+         
             ]
-
-# class ListOfSnacksSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = ListOfSnack
-#         fields = [
-#           'name'
-#             ]
 
 
