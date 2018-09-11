@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from rest_framework import serializers
-from .models import  Plans, Profile, OrderPlan
+from .models import  Plans, Profile, OrderPlan, Order
 
 from django.dispatch import receiver
 
@@ -83,18 +83,6 @@ class PlansSerializer(serializers.ModelSerializer):
             ]
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    OrderPlan = serializers.SerilizerMethodField()
-    class Meta:
-        model = Order
-        fields = '__all__'
-
-    def get_OrderPlan (self, obj):
-      request = self.context.get('request')
-      OrderPlan = OrderPlan.objects.all(order = obj)
-      return OrderPlanListSerializer (OrderPlan, many - True,context = {"request": request}).data
-
-
 class OrderPlanListSerializer (serializers.ModelSerializer):
   class Meta:
     model = OrderPlan
@@ -103,6 +91,17 @@ class OrderPlanListSerializer (serializers.ModelSerializer):
 
 
 
-         
+class OrderSerializer(serializers.ModelSerializer):
+    
+    OrderPlans = serializers.SerializerMethodField()
+    class Meta:
+        model = Order
+        fields = '__all__'
 
+    def get_OrderPlans (self, obj):
+      # OrderPlan = OrderPlan.objects.all(order = obj)
+      request = self.context.get('request')
+      OrderPlans = OrderPlan.objects.filter(order = obj)
+      
+      return OrderPlanListSerializer(OrderPlans, many= True, context = {"request": request}).data
 

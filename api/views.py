@@ -18,6 +18,7 @@ class PlansList(ListAPIView):
 
 
 
+
 class OrderCreation(APIView):
     # queryset = OrderPlan.objects.all()
     serializer_class = OrderSerializer
@@ -37,7 +38,9 @@ class OrderCreation(APIView):
 
 
 class OrderList (ListAPIView):
-    # queryset = 
+    queryset = Order.objects.all()
+    SerilizerMethodField = OrderPlan
+    # queryset = Order.objects.all()
     serializer_class = OrderSerializer
     
 
