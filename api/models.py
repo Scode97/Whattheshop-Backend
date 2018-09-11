@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Plans(models.Model):
 	name = models.CharField(max_length= 250)
-	image = models.ImageField(default='SOME STRING')
+	image = models.ImageField(default='image')
 	description = models.CharField(max_length= 1000, default="")
 	
 	totalPrice = models.DecimalField(decimal_places = 2, max_digits=5)
@@ -13,6 +13,27 @@ class Plans(models.Model):
 
 	def __str__(self):
 		return self.name
+
+
+# for plans ...... orderplan is the table connecting plans and order
+
+class Order(models.Model):
+	user = models.ForeignKey(User, on_delete = models.CASCADE)
+	plans = models.ManyToManyField(Plans, through ='OrderPlan')
+	date_time = models.DateTimeField(auto_now_add = True, auto_now= False)
+
+	# def __str__(self):
+	# 	return self.date_time
+
+
+class OrderPlan(models.Model):
+	order = models.ForeignKey(Order, on_delete=models.CASCADE)
+	qty = models.IntegerField(default=0, null= True)
+	price = models.DecimalField(default = 0, decimal_places = 2, max_digits=5)
+	plan = models.ForeignKey(Plans, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.plan
 
 
 # FOR Profile
@@ -25,24 +46,3 @@ class Profile(models.Model):
 
 	def __str__(self):
 		return self.user_name
-
-
-# class OrderPlan (models.Model):
-# 	plans = models.CharField(plans, max_length = 250)
-# 	order = models.CharField(order, max_length = 250)
-
-# 	def __str__(self):
-# 		return self.plans
-
-# class Order (models.Model):
-# 	user_name = models.ForeignKey(User, on_delete = models.CASCADE)
-# 	plans = models.ManyToManyField(plans, through = OrderPlan)
-
-# 	def __str__(self):
-# 		return self.user_name
-
-
-
-
-
-
