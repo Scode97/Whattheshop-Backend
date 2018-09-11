@@ -105,16 +105,3 @@ class OrderSerializer(serializers.ModelSerializer):
       
       return OrderPlanListSerializer(OrderPlans, many= True, context = {"request": request}).data
 
-
-# class ExpertListSerializer(serializers.ModelSerializer):
-#    items = serializers.SerializerMethodField()
-
-#    class Meta:
-#        model = Expert
-#        fields = '__all__'
-
-#    def get_items(self, obj):
-#        request = self.context.get('request')
-#        items = Item.objects.filter(expert=obj)
-#        return ItemListSerializer(items, many=True, context={"request": request}).data
-#  
