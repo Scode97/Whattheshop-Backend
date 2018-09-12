@@ -1,12 +1,12 @@
-from rest_framework.generics import CreateAPIView, ListAPIView
-from .serializers import UserCreateSerializer, PlansSerializer, OrderSerializer
+from rest_framework.generics import CreateAPIView, ListAPIView,  DestroyAPIView
+from .serializers import UserCreateSerializer, PlansSerializer, OrderSerializer, ProfileSerializer
 
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
-from .models import Plans, Order, OrderPlan
+from .models import Plans, Order, OrderPlan, Profile
 
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
@@ -15,6 +15,23 @@ class UserCreateAPIView(CreateAPIView):
 class PlansList(ListAPIView):
 	queryset = Plans.objects.all()
 	serializer_class = PlansSerializer
+
+
+class ProfileAPIView(CreateAPIView):
+    serializer_class = ProfileSerializer
+
+
+class ProfileList(ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class DeleteProfileAPIView(DestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'profile_id'
+
+
 
 
 
@@ -40,8 +57,14 @@ class OrderCreation(APIView):
 class OrderList (ListAPIView):
     queryset = Order.objects.all()
     SerilizerMethodField = OrderPlan
+    # queryset = Order.objects.filter(OrderPlan.id)
     # queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+    
+    
+    
+
     
 
 
