@@ -21,31 +21,32 @@ class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
-      model = User
-      fields = ['username', 'password','token', 'first_name', 'last_name', 'email']
+        model = User
+        fields = ['username', 'password','token', 'first_name', 'last_name', 'email']
 
     def create(self, validated_data):
+        print (validated_data)
         username = validated_data['username']
         password = validated_data['password']
         firstname = validated_data['first_name']
-        lastname= validated_data['last_name']
+        lastname = validated_data['last_name']
         email = validated_data['email']
 
 
 
         new_user = User(username=username, first_name= firstname, last_name= lastname, email=email)
         new_user.set_password(password)
-        
+          
 
         new_user.save()
 
-        # refer https://stackoverflow.com/questions/41623751/token-creation-with-rest-framework-jwt
+          # refer https://stackoverflow.com/questions/41623751/token-creation-with-rest-framework-jwt
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
         handler =jwt_payload_handler(new_user)
 
-      
+        
         token = jwt_encode_handler(handler)
 
         validated_data["token"] = token
@@ -84,24 +85,30 @@ class PlansSerializer(serializers.ModelSerializer):
 
 
 class OrderPlanListSerializer (serializers.ModelSerializer):
-  class Meta:
-    model = OrderPlan
-    fields = '__all__'
+    plan = PlansSerializer()
+    class Meta:
+        model = OrderPlan
+        # fields = '__all__'
+        exclude = ['order']
 
 
 
 
 class OrderSerializer(serializers.ModelSerializer):
     
-    OrderPlans = serializers.SerializerMethodField()
+    order_plans = serializers.SerializerMethodField()
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['date_time', 'order_plans', 'user']
 
-    def get_OrderPlans (self, obj):
-      # OrderPlan = OrderPlan.objects.all(order = obj)
+    def get_order_plans(self, obj):
       request = self.context.get('request')
-      OrderPlans = OrderPlan.objects.filter(order = obj)
-      
-      return OrderPlanListSerializer(OrderPlans, many= True, context = {"request": request}).data
+      order_plans = OrderPlan.objects.filter(order = obj)
+      return OrderPlanListSerializer(order_plans, many=True, context = {"request": request}).data
 
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
