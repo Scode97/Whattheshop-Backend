@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserCreateAPIView, DeleteProfileAPIView, ProfileAPIView,  ProfileList
+from .views import UserCreateAPIView, DeleteProfileAPIView, ProfileAPIView,  ProfileList, DeleteAPIView
 from rest_framework_jwt.views import obtain_jwt_token
 from api.views import PlansList, OrderCreation, OrderList
 
@@ -12,11 +12,13 @@ urlpatterns = [
 
     path('createprofile/', ProfileAPIView.as_view(), name='api-create'),
     path('deleteprofile/<int:profile_id>/', DeleteProfileAPIView.as_view(), name='api-delete'),
+    path('deleteorder/<int:order_id>/', DeleteAPIView.as_view(), name='api-delete'),
+
 
 
     path('plansList/', PlansList.as_view(), name='api-plan-List'),
 
     path('orders/', OrderCreation.as_view(), name = 'api-orders'),
-    path('orderlist/', OrderList.as_view(), name = 'api-order-list'),
+    path('orderlist/<int:user_id>/', OrderList.as_view(), name = 'api-order-list'),
 
 ]

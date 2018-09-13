@@ -18,7 +18,7 @@ class Plans(models.Model):
 # for plans ...... orderplan is the table connecting plans and order
 
 class Order(models.Model):
-	user = models.ForeignKey(User, on_delete = models.CASCADE)
+	user = models.ForeignKey(User, on_delete = models.CASCADE, null= True)
 	plans = models.ManyToManyField(Plans, through ='OrderPlan')
 	date_time = models.DateTimeField(auto_now_add = True, auto_now= False)
 

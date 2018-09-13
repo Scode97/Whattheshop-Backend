@@ -93,9 +93,7 @@ class OrderPlanListSerializer (serializers.ModelSerializer):
 
 
 
-
-class OrderSerializer(serializers.ModelSerializer):
-    
+class OrderSerializer(serializers.ModelSerializer): 
     order_plans = serializers.SerializerMethodField()
     class Meta:
         model = Order
@@ -105,6 +103,9 @@ class OrderSerializer(serializers.ModelSerializer):
       request = self.context.get('request')
       order_plans = OrderPlan.objects.filter(order = obj)
       return OrderPlanListSerializer(order_plans, many=True, context = {"request": request}).data
+
+
+       
 
 
 
