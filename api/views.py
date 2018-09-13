@@ -1,5 +1,5 @@
 from rest_framework.generics import CreateAPIView, ListAPIView,  DestroyAPIView
-from .serializers import UserCreateSerializer, PlansSerializer, OrderSerializer, ProfileSerializer
+from .serializers import UserCreateSerializer, PlansSerializer, OrderSerializer, ProfileSerializer, OrderPlanListSerializer
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -31,6 +31,13 @@ class DeleteProfileAPIView(DestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'profile_id'
 
+class DeleteAPIView(DestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'order_id'
+
+
 
 
 
@@ -54,21 +61,21 @@ class OrderCreation(APIView):
         return Response(status=  status.HTTP_201_CREATED)
 
 
-class OrderList (ListAPIView):
-    queryset = Order.objects.all()
-    SerilizerMethodField = OrderPlan
-    # queryset = Order.objects.filter(OrderPlan.id)
-    # queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-
-    
-    
-    
-
-    
+# class OrderList (ListAPIView):
 
 
-       
+class OrderList(APIView):
+    
+ 
+
+    def get(self, request, *args, **kwargs):
+        user_orders = Order.objects.filter(user= kwargs.get('user_id'))
+
+        serializer = OrderSerializer(user_orders, many= True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+   
 
 
 
